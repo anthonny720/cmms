@@ -19,14 +19,14 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['54.235.229.148',]
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 if not DEBUG:
-    CORS_ORIGIN_WHITELIST = ['64.227.27.204']
-    CSRF_TRUSTED_ORIGINS = ['64.227.27.204']
+    CORS_ORIGIN_WHITELIST = ['54.235.229.148']
+    CSRF_TRUSTED_ORIGINS = ['54.235.229.148']
 
 # Application definition
 
