@@ -9,7 +9,7 @@ import ReactStars from "react-rating-stars-component/dist/react-stars";
 import {setAlert} from "../../redux/actions/alert";
 import {add_work, update_work} from "../../redux/actions/management";
 
-const FormTasks = ({data, close, id,params}) => {
+const FormTasks = ({data, close, id, params}) => {
 
     const dispatch = useDispatch();
     const physical = useSelector(state => state.Assets.physical)
@@ -25,12 +25,13 @@ const FormTasks = ({data, close, id,params}) => {
         validateOnChange: true,
         onSubmit: (form, onSubmitProps) => {
             if (size(selectedTools) > 0 && size(selectedPersonnel) > 0 && selectedEquipment !== '' && selectedType !== '' && selectedFailure !== '') {
+
                 form.asset = selectedEquipment.id
                 form.tools = map(selectedTools, (item) => item?.id)
                 form.technical = map(selectedPersonnel, (item) => item?.id)
                 form.type_maintenance = selectedType?.id
                 form.failure = selectedFailure.id
-                data ? dispatch(update_work(form, id,params)) : dispatch(add_work(form,params))
+                data ? dispatch(update_work(form, id, params)) : dispatch(add_work(form, params))
                 close()
             } else {
                 dispatch(setAlert('Debe seleccionar al menos un elemento de cada lista', 'error'))

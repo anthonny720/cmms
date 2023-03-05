@@ -81,7 +81,7 @@ export const get_work_finished = (params) => async dispatch => {
     }
 }
 
-export const add_work = (form) => async dispatch => {
+export const add_work = (form,params) => async dispatch => {
     const config = {
         headers: {
             'Authorization': `JWT ${localStorage.getItem('access')}`,
@@ -97,8 +97,8 @@ export const add_work = (form) => async dispatch => {
                 type: ADD_WORK_SUCCESS,
                 payload: res.data
             });
-            dispatch(get_work_finished())
-            dispatch(get_work_pending())
+            dispatch(get_work_finished(params))
+            dispatch(get_work_pending(params))
             dispatch(setAlert('OT registrada', 'success'));
         } else {
             dispatch({
@@ -112,7 +112,7 @@ export const add_work = (form) => async dispatch => {
         dispatch(setAlert("No se puede procesar la solicitud", 'error'));
     }
 }
-export const update_work = (form, pk) => async dispatch => {
+export const update_work = (form, pk,params) => async dispatch => {
     const config = {
         headers: {
             'Authorization': `JWT ${localStorage.getItem('access')}`,
@@ -128,8 +128,8 @@ export const update_work = (form, pk) => async dispatch => {
                 type: UPDATE_WORK_SUCCESS,
                 payload: res.data
             });
-            dispatch(get_work_finished())
-            dispatch(get_work_pending())
+            dispatch(get_work_finished(params))
+            dispatch(get_work_pending(params))
             dispatch(setAlert('OT actualizada', 'success'));
         } else {
             dispatch({

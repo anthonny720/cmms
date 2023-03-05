@@ -64,7 +64,7 @@ const FormRequirements = ({data, close, update}) => {
             </div>
 
             <div className={`grid md:grid-cols-2 grid-cols-1 gap-2 mt-2`}>
-                {me && me !== undefined && me !== null && me?.role === "Editor" && map(columns, (column, index) => (
+                {me && me !== undefined && me !== null && (me?.role === "Editor" || me?.role === "Técnico") && map(columns, (column, index) => (
                     <div key={index}>
                         {formik.values[column.name].length > 0 &&
                             <p className={`text-[10px]  font-extralight leading-none text-blue-400 `}>{column.title}</p>}

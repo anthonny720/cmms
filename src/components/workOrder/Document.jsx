@@ -2,7 +2,7 @@ import React from 'react';
 import {Document, Image, Page, PDFViewer, StyleSheet, Text, View} from "@react-pdf/renderer";
 import Logo from "../../assets/logo.png";
 import {useSelector} from "react-redux";
-import {filter, map} from "lodash";
+import {filter, find, map} from "lodash";
 import Humanize from "humanize-plus";
 
 const styles = StyleSheet.create({
@@ -21,9 +21,11 @@ const styles = StyleSheet.create({
 });
 const DocumentViewer = ({data}) => {
     const physical = useSelector(state => state.Assets.physical)
-    const tools = useSelector(state => state.Assets.tools)
     const types = useSelector(state => state.Configuration.types)
+    const tools = useSelector(state => state.Assets.tools)
     const failures = useSelector(state => state.Configuration.failures)
+
+
     return (<PDFViewer style={{width: "100%", height: "100%"}}>
         <Document>
             <Page size="A4" style={{padding: "12px", width: "100%"}}>
@@ -307,7 +309,7 @@ const DocumentViewer = ({data}) => {
                             paddingVertical: "2px"
                         }}>COSTO</Text>
                     </View>
-                    {map(data?.resources_used, (item, index) => {
+                    {map(data?.resources_used, item => {
                         return (<View style={styles.section}>
                             <Text style={{
                                 fontSize: "12px",
@@ -350,13 +352,18 @@ const DocumentViewer = ({data}) => {
                         fontFamily: "Times-Roman",
                         textAlign: "center",
                     }}>HERRAMIENTAS Y OTROS USADOS Y/O REQUERIDOS</Text>
-                    {map(data?.tools, (t, index) => (<Text style={{
-                        fontSize: "12px",
-                        fontWeight: "extrabold",
-                        fontFamily: "Times-Roman",
-                        textAlign: "center",
-                        width: "100%"
-                    }}>• {filter(tools, (tool) => tool.id = t)[index]?.name}</Text>))}
+                    {map(data?.tools, t => {
+                        const filteredTool = filter(tools, ['id', t])[0];
+                        console.log(filteredTool)
+                        return (
+                            <Text style={{
+                                fontSize: "12px",
+                                fontWeight: "extrabold",
+                                fontFamily: "Times-Roman",
+                                textAlign: "center",
+                                width: "100%"
+                            }}>• {filteredTool&&filteredTool?.name}</Text>)
+                    })}
 
 
                 </View>

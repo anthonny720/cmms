@@ -100,7 +100,7 @@ const WorkOrder = () => {
 
     return (<Layout>
         <Modal isOpen={isOpen} close={openModal} children={content}/>
-        {me && me !== undefined && me !== null && me?.role === "Editor" && "Técnico" && <button
+        {me && me !== undefined && me !== null && (me?.role === "Editor" || me?.role === "Técnico") && <button
             className={"absolute z-30 peer md:right-0 right-4 xs:left-20 bottom-0  h-14 w-14 rounded-full bg-[#4687f1] text-lg"}>
             <Popover className="relative">
                 {({open}) => (<>

@@ -98,7 +98,7 @@ class GetGraphicsFailure(APIView):
                         cost += q.get_cost()
                 except:
                     pass
-                percentage = float(query.count()) * 100 / float(total)
+                percentage = round(float(query.count()) * 100 / float(total),2)
                 count_failure.append({'label': u.name + " - " + str(percentage) + "%", 'data': query.count(),
                                       'backgroundColor': generate_color(), 'cost': cost})
             return Response({'count_failure': count_failure}, status=status.HTTP_200_OK)
@@ -128,7 +128,7 @@ class GetGraphicsType(APIView):
                         cost += q.get_cost()
                 except:
                     pass
-                percentage = float(query.count()) * 100 / float(total)
+                percentage = round(float(query.count()) * 100 / float(total),2)
                 count_type.append({'label': u.name + " - " + str(percentage) + "%", 'data': query.count(),
                                    'backgroundColor': generate_color(), 'cost': cost})
             return Response({'count_type': count_type}, status=status.HTTP_200_OK)
@@ -158,7 +158,7 @@ class GetGraphicsEquipment(APIView):
                         cost += q.get_cost()
                 except:
                     pass
-                percentage = float(query.count()) * 100 / float(total)
+                percentage = round(float(query.count()) * 100 / float(total),2)
                 if query.count() > 0:
                     count_equipment.append({'label': u.name + " - " + str(percentage) + "%", 'data': query.count(),
                                             'backgroundColor': generate_color(), 'cost': cost})
@@ -296,7 +296,7 @@ class GetCostDay(APIView):
                 result = []
                 for q in query:
                     total += q.get_cost()
-                    result.append(total)
+                result.append(total)
                 data.append({'label': r, 'data': result, 'backgroundColor': generate_color()})
             return Response({'data': data}, status=status.HTTP_200_OK)
         except Exception as e:
