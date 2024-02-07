@@ -1,8 +1,7 @@
+import environ
 import os
 from datetime import timedelta
 from pathlib import Path
-
-import environ
 
 SITE_NAME = 'Greenbox'
 
@@ -34,10 +33,11 @@ if not DEBUG:
 DJANGO_APPS = ['django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions',
                'django.contrib.messages', 'django.contrib.staticfiles', ]
 
-PROJECT_APPS = ['apps.users', 'apps.config', 'apps.assets', 'apps.management', 'apps.store', ]
+PROJECT_APPS = ['apps.users', 'apps.config', 'apps.assets', 'apps.management', 'apps.store']
 
 THIRD_PARTY_APPS = ['corsheaders', 'simple_history', 'rest_framework', 'import_export', 'djoser',
-                    'rest_framework_simplejwt', 'rest_framework_simplejwt.token_blacklist', ]
+                    'rest_framework_simplejwt', 'rest_framework_simplejwt.token_blacklist',
+                    'rest_framework_simplejwt.token_blacklist', ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
@@ -62,8 +62,8 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {'default': {'ENGINE': 'django.db.backends.postgresql', 'NAME': 'greenbox_mm',
-                         'USER': 'anthonny', 'PASSWORD': 'lO0sBzg&@7Kayr0H^PeT', 'HOST': 'localhost', 'PORT': 5432, }}
+DATABASES = {'default': {'ENGINE': 'django.db.backends.postgresql', 'NAME': 'greenbox_mm', 'USER': 'anthonny',
+                         'PASSWORD': 'lO0sBzg&@7Kayr0H^PeT', 'HOST': 'localhost', 'PORT': 5432, }}
 ## databases default db.sqlite3
 # DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'), }}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
@@ -103,8 +103,8 @@ REST_FRAMEWORK = {'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsA
 # JWT
 
 SIMPLE_JWT = {'AUTH_HEADER_TYPES': ('JWT',), 'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10080),
-              'REFRESH_TOKEN_LIFETIME': timedelta(days=30), 'ROTATE_REFREHS_TOKENS': True,
-              'BLACKLIST_AFTER_ROTATION': True, 'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',)}
+              'REFRESH_TOKEN_LIFETIME': timedelta(days=30), 'ROTATE_REFRESH_TOKENS': True,
+              'BLACKLIST_AFTER_ROTATION': True, 'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken','rest_framework_simplejwt.token_blacklist',)}
 
 # Djoser
 DJOSER = {'LOGIN_FIELD': 'email', 'SERIALIZERS': {'user_create': 'apps.users.serializers.UserCreateSerializer',

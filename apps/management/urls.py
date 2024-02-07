@@ -1,7 +1,6 @@
 from django.urls import path
 
-from .views import AddWorkOrderView, UpdateWorkOrderView, DeleteWorkOrderView, AddResourcesOTView, WorkOrderListView, \
-    UpdateWorkSupervisorView, DeleteResourceOTView, DeleteHelperOTView, AddHelpersOTView, UpdateWorkRequesterView
+from .views import AddWorkOrderView, UpdateWorkOrderView, DeleteWorkOrderView, AddResourcesOTView, WorkOrderListView, UpdateWorkSupervisorView, DeleteResourceOTView, DeleteHelperOTView, AddHelpersOTView, UpdateWorkRequesterView
 
 app_name = "management"
 

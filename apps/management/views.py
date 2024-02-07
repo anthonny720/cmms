@@ -9,8 +9,7 @@ from rest_framework.views import APIView
 from apps.management.models import WorkOrder, ResourceItem, HelperItem
 from apps.management.serializers import WorkOrderSerializer
 from apps.store.models import Article
-from apps.util.permissions import PlannerEditorPermission, TechnicalEditorPermission, SupervisorEditorPermission, \
-    BossEditorPermission, RequesterEditorPermission
+from apps.util.permissions import PlannerEditorPermission, TechnicalEditorPermission, SupervisorEditorPermission, BossEditorPermission, RequesterEditorPermission
 
 User = get_user_model()
 
@@ -38,8 +37,8 @@ class WorkOrderListView(APIView):
             if physical_id:
                 queryset = queryset.filter(asset_id=physical_id)
             if date_start and date_end:
-                start_date = parse_date(date_start)
-                end_date = parse_date(date_end)
+                start_date = datetime.strptime(date_start, "%d/%m/%Y")
+                end_date = datetime.strptime(date_end, "%d/%m/%Y")
                 if start_date and end_date:
                     queryset = queryset.filter(date_start__range=[start_date, end_date])
                 else:
@@ -77,7 +76,7 @@ class UpdateWorkOrderView(APIView):
     def patch(self, request, pk):
         try:
             work_order = WorkOrder.objects.get(pk=pk)
-            if request.user.role != 'P' or request.user.role != 'B' or request.user != work_order.technical:
+            if request.user.role != 'P' and request.user.role != 'B' and request.user != work_order.technical:
                 return Response({'error': 'No tiene permisos para realizar esta acción'},
                                 status=status.HTTP_403_FORBIDDEN)
             # Opcional:
@@ -139,7 +138,7 @@ class AddResourcesOTView(APIView):
     def post(self, request, pk):
         order = get_object_or_404(WorkOrder, pk=pk)
 
-        if request.user != order.technical or request.user.role != 'P' or request.user.role != 'B':
+        if request.user != order.technical and request.user.role != 'P' and request.user.role != 'B':
             return Response({'error': 'No tiene permisos para realizar esta acción'}, status=status.HTTP_403_FORBIDDEN)
         # Opcional:
         # if (timezone.now() - order.date_start).total_seconds() > 24 * 60 * 60:
@@ -162,7 +161,7 @@ class AddResourcesOTView(APIView):
 class DeleteResourceOTView(APIView):
     def delete(self, request, pk):
         resource_item = get_object_or_404(ResourceItem, pk=pk)
-        if request.user != resource_item.work_order.technical or request.user.role != 'P' or request.user.role != 'B':
+        if request.user != resource_item.work_order.technical and request.user.role != 'P' and request.user.role != 'B':
             return Response({'error': 'No tiene permisos para realizar esta acción'}, status=status.HTTP_403_FORBIDDEN)
         resource_item.delete()
         return Response({'message': 'Resource deleted successfully'}, status=status.HTTP_200_OK)
@@ -172,7 +171,7 @@ class DeleteResourceOTView(APIView):
 class AddHelpersOTView(APIView):
     def post(self, request, pk):
         order = get_object_or_404(WorkOrder, pk=pk)
-        if request.user != order.technical or request.user.role != 'P' or request.user.role != 'B':
+        if request.user != order.technical and request.user.role != 'P' and request.user.role != 'B':
             return Response({'error': 'No tiene permisos para realizar esta acción'}, status=status.HTTP_403_FORBIDDEN)
         # Opcional:
         # if (timezone.now() - order.date_start).total_seconds() > 24 * 60 * 60:
@@ -195,7 +194,7 @@ class DeleteHelperOTView(APIView):
     def delete(self, request, pk):
         helper_item = get_object_or_404(HelperItem, pk=pk)
 
-        if request.user != helper_item.work_order.technical or request.user.role != 'P' or request.user.role != 'B':
+        if request.user != helper_item.work_order.technical and request.user.role != 'P' and request.user.role != 'B':
             return Response({'error': 'No tiene permisos para realizar esta acción'}, status=status.HTTP_403_FORBIDDEN)
 
         # Opcional: Restricción de tiempo para la eliminación de ayudantes

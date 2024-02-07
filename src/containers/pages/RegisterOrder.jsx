@@ -17,10 +17,10 @@ const RegisterOrder = () => {
     const dispatch = useDispatch();
 
     const {works, physical, users, types} = useSelector(({Management, Assets, Auth, Configuration}) => ({
-        works: Management.works,
-        physical: Assets.physical,
-        users: Auth.users.filter(user => user.role === 'T'),
-        types: Configuration.types,
+        works: Management?.works || [],
+        physical: Assets?.physical || [],
+        users: Auth?.users?.filter(user => user.role === 'T') || [],
+        types: Configuration?.types || [],
     }));
 
     const [params, setParams] = useState(null);

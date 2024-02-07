@@ -83,6 +83,7 @@ class Physical(models.Model):
     criticality = models.CharField(max_length=50, choices=Status.choices, default=Status.low, verbose_name='Criticidad')
     parent = models.ForeignKey(Fixed, on_delete=models.PROTECT, related_name='physicals', null=True, blank=True,
                                verbose_name='Activo Fijo')
+    code = models.CharField(max_length=50, verbose_name='Código', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     thumbnail = models.ImageField(upload_to=custom_thumbnail_file_path, blank=True, null=True,
                                   verbose_name="Fotografía",

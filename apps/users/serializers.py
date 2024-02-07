@@ -21,7 +21,6 @@ class UserCreateSerializer(UserCreateSerializer):
             'get_category_name',
             'get_role_name',
             'is_active',
-            'get_admin',
             'password',
             'phone',
             'dni',

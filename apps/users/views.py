@@ -1,19 +1,22 @@
 # Create your views here.
+from apps.users.models import UserCategory, ThirdParties
+from apps.users.serializers import ThirdPartiesSerializer
+from apps.util.permissions import IsAdmin, PlannerEditorPermission, BossEditorPermission
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from apps.users.models import UserCategory, ThirdParties
-from apps.users.serializers import ThirdPartiesSerializer
-from apps.util.permissions import IsAdmin, PlannerEditorPermission, BossEditorPermission
-
+from djoser.views import UserViewSet
 User = get_user_model()
 
 
-# Create your views here.
+class CustomUserViewSet(UserViewSet):
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+
+
+
 @permission_classes([IsAdmin])
 class DeleteUserView(APIView):
     def delete(self, request, pk):
@@ -72,4 +75,5 @@ class DeleteThirdPartiesView(APIView):
         third_party = get_object_or_404(ThirdParties, pk=pk)
         third_party.delete()
         return Response({'message': 'Third parties deleted'}, status=status.HTTP_200_OK)
+
 
