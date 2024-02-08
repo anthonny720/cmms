@@ -23,12 +23,13 @@ const Store = () => {
 
 
     return (<Layout>
-        <ArrowPathIcon onClick={() => sync()}
-                       className={`${loading && 'animate-spin'} text-white bg-green-400 bg-opacity-60 rounded-lg cursor-pointer absolute z-[200] top-16 right-4 h-8 w-8 flex items-center justify-center`}/>
+
         <div className={"h-full overflow-y-auto scrollbar-hide w-full bg-white p-4 rounded-l-2xl"}>
             <Header/>
+            <ArrowPathIcon onClick={() => sync()}
+                           className={`${loading && 'animate-spin'} text-white right-4 bg-green-400 bg-opacity-60 rounded-lg cursor-pointer  absolute h-8 w-8 flex items-center justify-center`}/>
             <SearchBar setParams={setParams}/>
-            <div className={"w-full overflow-auto scrollbar-hide"}>
+            <div className={"w-full overflow-auto scrollbar-hide "}>
                 <Table data={articles}/>
             </div>
         </div>

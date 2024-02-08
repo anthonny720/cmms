@@ -61,7 +61,7 @@ class DeleteFixedView(APIView):
     def delete(self, request, pk):
         fixed_asset = get_object_or_404(Fixed, pk=pk)
         fixed_asset.delete()
-        return Response({'message': 'Fixed asset deleted'}, status=status.HTTP_204_NO_CONTENT)
+        return Response({'message': 'Fixed asset deleted'}, status=status.HTTP_200_OK)
 
 
 @permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
@@ -111,7 +111,7 @@ class DeleteToolView(APIView):
     def delete(self, request, pk):
         tool = get_object_or_404(Tool, pk=pk)
         tool.delete()
-        return Response({'message': 'Tool deleted'}, status=status.HTTP_204_NO_CONTENT)
+        return Response({'message': 'Tool deleted'}, status=status.HTTP_200_OK)
 
 
 class ListPhysicalView(APIView):

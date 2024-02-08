@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.6125a5ad.css",
-    "main.js": "/static/js/main.876b9295.js",
+    "main.css": "/static/css/main.b45f566f.css",
+    "main.js": "/static/js/main.6f68b01e.js",
     "static/media/tuerca.gif": "/static/media/tuerca.9e382078ff079bd7c0a0.gif",
     "static/media/student-time-management.svg": "/static/media/student-time-management.1bb788c797984227517206279d5cf28f.svg",
     "index.html": "/index.html",
-    "main.6125a5ad.css.map": "/static/css/main.6125a5ad.css.map",
-    "main.876b9295.js.map": "/static/js/main.876b9295.js.map"
+    "main.b45f566f.css.map": "/static/css/main.b45f566f.css.map",
+    "main.6f68b01e.js.map": "/static/js/main.6f68b01e.js.map"
   },
   "entrypoints": [
-    "static/css/main.6125a5ad.css",
-    "static/js/main.876b9295.js"
+    "static/css/main.b45f566f.css",
+    "static/js/main.6f68b01e.js"
   ]
 }

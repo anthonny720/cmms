@@ -38,10 +38,8 @@ const TableEquipments = ({data, update, columns, remove}) => {
                 <td className="py-2 px-4 text-center text-xs font-light">{item?.model}</td>
 
                 <td className="py-2 px-4 text-center text-xs font-light">{item?.parent_name}</td>
-                <td className=" py-2 text-center text-xs font-light flex justify-center">
-                    {item?.thumbnail_url !== null &&
-                        <img className={"w-20"} src={`${process.env.REACT_APP_API_URL}${item?.thumbnail_url}`}
-                             alt=""/>}
+                <td className="py-2 px-4 text-center text-xs font-light">
+                    {item?.code}
                 </td>
                 <td className={`py-2 px-4 text-center text-xs font-light`}>
                         <span

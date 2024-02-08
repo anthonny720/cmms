@@ -6,21 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="e6f3b8eb-c3de-4d4d-acb4-ba775cf463d9" name="Changes" comment="Update v2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/management/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/management/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/management/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/assets/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/assets/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Assets/Equipments.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Assets/Equipments.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Assets/TableRegister.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Assets/TableRegister.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Assets/Tools.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Assets/Tools.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Assets/FormEquipments.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Assets/FormEquipments.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Assets/TableEquipments.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Assets/TableEquipments.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/resources/FormPersonnel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/resources/FormPersonnel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/workOrder/Document.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workOrder/Document.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/pages/RegisterOrder.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/RegisterOrder.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/containers/pages/Resources.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Resources.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/pages/ThirdParties.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/ThirdParties.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/pages/WorkOrder.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/WorkOrder.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/pages/Store.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/pages/Store.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/actions/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/auth.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,6 +27,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -111,7 +106,9 @@
       <option name="presentableId" value="Default" />
       <updated>1707139889673</updated>
       <workItem from="1707139890968" duration="77229000" />
-      <workItem from="1707365174666" duration="6532000" />
+      <workItem from="1707365174666" duration="6686000" />
+      <workItem from="1707397706063" duration="933000" />
+      <workItem from="1707405106536" duration="6397000" />
     </task>
     <task id="LOCAL-00001" summary="Update v6">
       <option name="closed" value="true" />
@@ -137,7 +134,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707344397992</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Update v2">
+      <option name="closed" value="true" />
+      <created>1707372346937</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1707372346937</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

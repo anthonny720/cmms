@@ -12,8 +12,8 @@ const FormPersonnel = ({data, close}) => {
     const category = useSelector(state => state.Configuration.categories);
 
     const roles = [{value: 'T', label: 'Técnico'}, {value: 'S', label: 'Supervisor'}, {
-        value: 'OT', label: 'Otro'
-    }, {value: 'P', label: 'Planner'}, {value: 'B', label: 'Jefe'}];
+        value: 'R', label: 'Solicitante'
+    }, {value: 'OT', label: 'Otro'}, {value: 'P', label: 'Planner'}, {value: 'B', label: 'Jefe'}];
 
 
     useEffect(() => {
@@ -23,91 +23,89 @@ const FormPersonnel = ({data, close}) => {
 
     const columns = [{name: 'first_name', title: 'Nombre', type: 'text', maxLength: 20}, {
         name: 'last_name', title: 'Apellidos', type: 'text', maxLength: 20
-    }, {name: 'email', title: 'Email', type: 'email'}, {name: 'phone', title: 'Teléfono', type: 'telf'}, {
-        name: 'dni', title: 'DNI', type: 'text', maxLength: 8
-    },]
-
+    }, {name: 'email', title: 'Email', type: 'email'}, {
+        name: 'phone', title: 'Teléfono', type: 'text', maxLength: 9
+    }, {name: 'dni', title: 'DNI', type: 'text', maxLength: 8}, {
+        name: 'password', title: 'Contraseña', type: 'password'
+    }];
 
     const formik = useFormik({
         initialValues: initialValues(data),
         validationSchema: Yup.object(validationSchema(data)),
         onSubmit: (formValues) => {
-            data ? dispatch(update_user(formValues, data.id)) : dispatch(add_user(formValues));
+            data ? dispatch(update_user(formValues, data?.id)) : dispatch(add_user(formValues));
             close();
         },
     });
 
-
-    return (
-
-        <form onSubmit={formik.handleSubmit} className="bg-white rounded px-8 pt-6 pb-8 mb-4">
-            <HeaderForm close={close} submit={formik.handleSubmit}/>
-            <div className="grid md:grid-cols-2 grid-cols-1 gap-2 mt-2">
-                {/* Iterar sobre cada campo definido en columns */}
-                {columns.map((column) => (<div key={column.name}>
-                    {formik.values[column.name] && (
-                        <p className="text-[10px] font-extralight leading-none text-blue-400">{column.title}</p>)}
-                    <input
-                        type={column.type}
-                        name={column.name}
-                        maxLength={column.maxLength}
-                        placeholder={column.title}
-                        className={`w-full p-3 mt-4 border rounded outline-none focus:bg-gray-50 text-xs font-light ${formik.errors[column.name] ? "border-red-300" : "border-gray-300"} focus:border-blue-300`}
-                        value={formik.values[column.name]}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                    />
-                    {formik.touched[column.name] && formik.errors[column.name] && (
-                        <p className="text-red-400 text-[10px] mt-1 font-extralight leading-none">{formik.errors[column.name]}</p>)}
-                </div>))}
-                <div>
-                    <p className="text-[10px] font-extralight leading-none text-blue-400">Categoría</p>
-                    <select
-                        name="category"
-                        className="w-full p-3 mt-4 border rounded outline-none focus:bg-gray-50 text-xs font-light focus:border-blue-300"
-                        value={formik.values.category}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                    >
-                        <option value="">Seleccione una categoría</option>
-                        {category.map((cat) => (<option key={cat.id} value={cat.id}>{cat.name}</option>))}
-                    </select>
-                    {formik.touched.category && formik.errors.category && (
-                        <p className="text-red-400 text-[10px] mt-1 font-extralight leading-none">{formik.errors.category}</p>)}
-                </div>
-                <div>
-                    <p className="text-[10px] font-extralight leading-none text-blue-400">Rol</p>
-                    <select
-                        name="role"
-                        className="w-full p-3 mt-4 border rounded outline-none focus:bg-gray-50 text-xs font-light focus:border-blue-300"
-                        value={formik.values.role}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                    >
-                        <option value="">Seleccione un rol</option>
-                        {roles.map((role) => (<option key={role.value} value={role.value}>{role.label}</option>))}
-                    </select>
-                    {formik.touched.role && formik.errors.role && (
-                        <p className="text-red-400 text-[10px] mt-1 font-extralight leading-none">{formik.errors.role}</p>)}
-                </div>
-                <div>
-                    <p className={`text-[10px]  font-extralight leading-none text-blue-400 `}>Estado</p>
-                    <Switch checked={formik.values.is_active} onChange={text => formik.setFieldValue('is_active', text)}
-                            as={Fragment}>
-                        {({checked}) => (/* Use the `checked` state to conditionally style the button. */
-                            <button
-                                className={`${checked ? 'bg-blue-600' : 'bg-gray-200'} mt-2 relative inline-flex h-6 w-11 items-center rounded-full`}
-                            >
-                                <span className="sr-only">Estado</span>
-                                <span
-                                    className={`${checked ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform rounded-full bg-white transition`}
-                                />
-                            </button>)}
-                    </Switch>
-                    <p className={` text-[10px] mt-1  font-extralight leading-none ${formik.errors.is_active ? "text-red-400" : " text-gray-800"}`}>{formik.errors.is_active}</p>
-                </div>
+    return (<form onSubmit={formik.handleSubmit} className="bg-white rounded px-8 pt-6 pb-8 mb-4">
+        <HeaderForm close={close} submit={formik.handleSubmit}/>
+        <div className="grid md:grid-cols-2 grid-cols-1 gap-2 mt-2">
+            {/* Iterar sobre cada campo definido en columns */}
+            {columns.map((column) => (<div key={column.name}>
+                {formik.values[column.name] && (
+                    <p className="text-[10px] font-extralight leading-none text-blue-400">{column.title}</p>)}
+                <input
+                    type={column.type}
+                    name={column.name}
+                    maxLength={column.maxLength}
+                    placeholder={column.title}
+                    className={`w-full p-3 mt-4 border rounded outline-none focus:bg-gray-50 text-xs font-light ${formik.errors[column.name] ? "border-red-300" : "border-gray-300"} focus:border-blue-300`}
+                    value={formik.values[column.name]}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+                {formik.touched[column.name] && formik.errors[column.name] && (
+                    <p className="text-red-400 text-[10px] mt-1 font-extralight leading-none">{formik.errors[column.name]}</p>)}
+            </div>))}
+            <div>
+                <p className="text-[10px] font-extralight leading-none text-blue-400">Categoría</p>
+                <select
+                    name="category"
+                    className="w-full p-3 mt-4 border rounded outline-none focus:bg-gray-50 text-xs font-light focus:border-blue-300"
+                    value={formik.values.category}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                >
+                    <option value="">Seleccione una categoría</option>
+                    {category.map((cat) => (<option key={cat.id} value={cat.id}>{cat.name}</option>))}
+                </select>
+                {formik.touched.category && formik.errors.category && (
+                    <p className="text-red-400 text-[10px] mt-1 font-extralight leading-none">{formik.errors.category}</p>)}
             </div>
-        </form>);
+            <div>
+                <p className="text-[10px] font-extralight leading-none text-blue-400">Rol</p>
+                <select
+                    name="role"
+                    className="w-full p-3 mt-4 border rounded outline-none focus:bg-gray-50 text-xs font-light focus:border-blue-300"
+                    value={formik.values.role}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                >
+                    <option value="">Seleccione un rol</option>
+                    {roles.map((role) => (<option key={role.value} value={role.value}>{role.label}</option>))}
+                </select>
+                {formik.touched.role && formik.errors.role && (
+                    <p className="text-red-400 text-[10px] mt-1 font-extralight leading-none">{formik.errors.role}</p>)}
+            </div>
+            <div>
+                <p className={`text-[10px]  font-extralight leading-none text-blue-400 `}>Estado</p>
+                <Switch checked={formik.values.is_active} onChange={text => formik.setFieldValue('is_active', text)}
+                        as={Fragment}>
+                    {({checked}) => (/* Use the `checked` state to conditionally style the button. */
+                        <button
+                            className={`${checked ? 'bg-blue-600' : 'bg-gray-200'} mt-2 relative inline-flex h-6 w-11 items-center rounded-full`}
+                        >
+                            <span className="sr-only">Estado</span>
+                            <span
+                                className={`${checked ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                            />
+                        </button>)}
+                </Switch>
+                <p className={` text-[10px] mt-1  font-extralight leading-none ${formik.errors.is_active ? "text-red-400" : " text-gray-800"}`}>{formik.errors.is_active}</p>
+            </div>
+        </div>
+    </form>);
 };
 
 const initialValues = (data) => {
@@ -117,10 +115,10 @@ const initialValues = (data) => {
         email: data?.email || '',
         phone: data?.phone || '',
         dni: data?.dni || '',
-        role: data?.role || 'O',
+        role: data?.role || 'OT',
         category: data?.category || '',
         password: '',
-        is_active: data?.is_active || ''
+        is_active: data?.is_active || true
     }
 }
 const validationSchema = (data) => {
@@ -128,13 +126,12 @@ const validationSchema = (data) => {
         first_name: Yup.string().required("Nombres no puede estar en blanco"),
         last_name: Yup.string().required("Apellidos no puede estar en blanco"),
         email: Yup.string("Email inválido").email("Email inválido").required("Email no puede estar en blanco"),
-        phone: Yup.string().min(9, "El teléfono debe tener un mínimo de 9 números").required("Teléfono no puede estar en blanco"),
+        phone: Yup.string().max(9, "El teléfono debe tener un mínimo de 9 números"),
         dni: Yup.string().min(8, "El DNI debe tener un mínimo y máximo de 8 números").required("DNI no puede estar en blanco"),
         role: Yup.string().required("Rol no puede estar en blanco"),
         category: Yup.number().required("Categoría no puede estar en blanco"),
         password: data ? Yup.string().min(8) : Yup.string().min(8).required(true),
         is_active: Yup.boolean().required(true)
-
     }
 }
 export default FormPersonnel;

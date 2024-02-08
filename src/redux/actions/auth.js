@@ -240,7 +240,6 @@ export const add_user = (form) => async dispatch => {
                 type: ADD_USER_SUCCESS,
             });
             dispatch(setAlert("Usuario registrado", "success"));
-
             dispatch(get_users());
 
         } else {
