@@ -68,9 +68,11 @@ const Equipments = () => {
                     <div className="h-full overflow-y-auto scrollbar-hide w-full bg-white p-4 rounded-l-2xl">
                         <SearchBar setParams={setParams}/>
                         <Filter/>
+                        <div className={"w-full overflow-scroll scrollbar-hide"}>
                         <TableEquipments
                             columns={['', 'Fecha de compra', 'Nombre', 'Modelo', 'Ubicación', 'Imagen', 'Criticidad']}
                             data={physical} remove={handleDeleteEquipments} update={handleUpdateEquipments}/>
+                        </div>
                     </div>
                 </>) : (selectedEquipment ? <FormEquipments data={selectedEquipment} close={handleCloseForm}/> :
                     <FormEquipments close={handleCloseForm}/>)}

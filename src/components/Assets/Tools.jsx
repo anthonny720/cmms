@@ -66,10 +66,13 @@ const Tools = () => {
         <div className="h-full overflow-y-auto scrollbar-hide w-full bg-white p-4 rounded-l-2xl">
             <Filter/>
             <SearchBar setParams={setParams}/>
-            <TableTools columns={columns} data={tools} onEdit={handleToolOperation} onDelete={handleDeleteTool}/>
-        </div>
+            <div className={"w-full overflow-scroll scrollbar-hide"}>
+                <TableTools columns={columns} data={tools} onEdit={handleToolOperation} onDelete={handleDeleteTool}/>
+            </div>
+            </div>
 
-    </Layout>);
+    </Layout>
+);
 };
 
 export default Tools;

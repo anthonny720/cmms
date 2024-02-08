@@ -66,9 +66,12 @@ const ThirdParties = () => {
 
         <div className={"h-full overflow-y-auto scrollbar-hide w-full bg-white p-4 rounded-l-2xl"}>
             <Header/>
-            <TableThird data={thirdParties} remove={handleDeleteThird} update={handleUpdateThird}/>
-        </div>
-    </Layout>);
+            <div className={"w-full overflow-scroll scrollbar-hide"}>
+                <TableThird data={thirdParties} remove={handleDeleteThird} update={handleUpdateThird}/>
+            </div>
+            </div>
+    </Layout>
+);
 };
 
 export default ThirdParties;

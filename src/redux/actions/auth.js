@@ -304,7 +304,6 @@ export const update_user = (form, id) => async dispatch => {
             });
             dispatch(setAlert("Usuario actualizado", 'success'));
             dispatch(get_users());
-
         } else {
             dispatch({
                 type: UPDATE_USER_FAIL
@@ -332,7 +331,7 @@ export const change_password = (form) => async dispatch => {
                 type: CHANGE_PASSWORD_SUCCESS,
             });
             dispatch(setAlert("Se actualizó la contraseña correctamente", 'success'));
-
+            dispatch(get_users());
         } else {
             dispatch({
                 type: CHANGE_PASSWORD_FAIL

@@ -41,7 +41,7 @@ class WorkOrder(models.Model):
     supervisor = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Supervisor', blank=True, null=True,
                                    related_name='work_orders_supervisor')
     requester = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Solicitante', blank=True, null=True,
-                                    related_name='work_orders_requester')
+                                  related_name='work_orders_requester')
     stop = models.BooleanField(verbose_name='Afectó la producción', default=False)
 
     created = models.DateTimeField(auto_now_add=True)
@@ -72,19 +72,18 @@ class WorkOrder(models.Model):
         if self.technical and self.technical.category:
             technical_duration = self.get_time()
             if technical_duration:
-                technical_cost = (
-                                         technical_duration.total_seconds() / 3600) * self.technical.category.salary  # Costo basado en horas
+                technical_cost = (technical_duration.total_seconds() / 3600) * float(self.technical.category.salary)
                 personnel_data.append({'name': self.technical.get_full_name(), 'cost': technical_cost,
-                    'signature': self.technical.get_signature(),
-                    'time': f"{self.date_start.strftime('%I:%M %p')} - {self.date_finish.strftime('%I:%M %p')}"})
+                                       'signature': self.technical.get_signature(),
+                                       'time': f"{self.date_start.strftime('%I:%M %p')} - {self.date_finish.strftime('%I:%M %p')}"})
 
         for helper in self.helpers_order.select_related('helper__category').all():
             helper_duration = helper.get_time()
             if helper_duration and helper.helper.category:
-                helper_cost = (helper_duration.total_seconds() / 60) * helper.helper.category.salary
+                helper_cost = (helper_duration.total_seconds() / 60) * float(helper.helper.category.salary)
                 time_str = f"{helper.date_start.strftime('%I:%M %p')} - {helper.date_finish.strftime('%I:%M %p')}"
                 personnel_data.append({'name': helper.helper.get_full_name(), 'cost': helper_cost,
-                    'signature': helper.helper.get_signature(), 'time': time_str})
+                                       'signature': helper.helper.get_signature(), 'time': time_str})
 
         return personnel_data
 
@@ -103,7 +102,6 @@ class WorkOrder(models.Model):
         except User.DoesNotExist:
             return ""
 
-
     def get_signature_by_role(self, role):
         try:
             user = User.objects.filter(role=role).first()
@@ -117,8 +115,6 @@ class WorkOrder(models.Model):
     def get_signature_boss(self):
         return self.get_signature_by_role('B')
 
-
-
     def get_signature_requester(self):
         try:
             if self.validated:
@@ -128,8 +124,6 @@ class WorkOrder(models.Model):
                 return ""
         except User.DoesNotExist:
             return ""
-
-
 
     def get_signature_supervisor(self):
         try:

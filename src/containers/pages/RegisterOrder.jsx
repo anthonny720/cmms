@@ -23,24 +23,27 @@ const RegisterOrder = () => {
         types: Configuration?.types || [],
     }));
 
-    const [params, setParams] = useState(null);
+    const [params, setParams] = useState();
     const [filter, setFilter] = useState({planned: false, user: null, type: null, physical: null});
     const {content, setContent, isOpen, setIsOpen, openModal} = ModalHook();
 
-    const formatDate = (date) => date ? new Date(date).toLocaleDateString('es-PE', {timeZone: 'UTC'}) : '';
-
 
     const updateFilterParams = useCallback(() => {
-        const {date_start, date_end, physical, type, user, planned} = filter;
+        const {physical, type, user, planned} = filter;
         const filterParams = {
-            date_start: formatDate(date_start), date_end: formatDate(date_end), physical, type, user, planned,
+            'date_start': params ? new Date(params?.[0]).toLocaleDateString('es-PE', {timeZone: 'UTC'}) : '',
+            'date_end': params ? new Date(params?.[1]).toLocaleDateString('es-PE', {timeZone: 'UTC'}) : '',
+            physical,
+            type,
+            user,
+            planned,
         };
         dispatch(get_works(filterParams));
-    }, [filter, dispatch]);
+    }, [filter, params, dispatch]);
 
     useEffect(() => {
         updateFilterParams();
-    }, [params, filter, updateFilterParams]);
+    }, [filter, params, updateFilterParams, dispatch]);
 
     const handleAction = useCallback((Component, data) => {
         setIsOpen(true);

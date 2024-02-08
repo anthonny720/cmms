@@ -84,17 +84,15 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def get_signature(self):
-        return self.signature if self.signature else ''
+        return self.signature.url if self.signature else ''
 
     def get_role_name(self):
         return self.get_role_display() if self.role else ''
 
     def get_full_name(self):
-        if self.first_name is None:
-            self.first_name = ''
-        if self.last_name is None:
-            self.last_name = ''
-        return self.first_name + ' ' + self.last_name
+        first_name = self.first_name if self.first_name else ''
+        last_name = self.last_name if self.last_name else ''
+        return f"{first_name} {last_name}".strip()
 
     def get_category_name(self):
         return self.category.name if self.category else ''
@@ -138,3 +136,4 @@ class ThirdParties(models.Model):
     class Meta:
         verbose_name_plural = 'Terceros'
         verbose_name = 'Tercero '
+

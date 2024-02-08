@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Layout from "../../hocs/Layout";
 import Table from "../../components/util/Table";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import FormPersonnel from "../../components/resources/FormPersonnel";
 import Modal from "../../components/util/Modal";
 import {MySwal} from "../../helpers/util";
-import {delete_user} from "../../redux/actions/auth";
+import {delete_user, get_users} from "../../redux/actions/auth";
 import ButtonAdd from "../../components/util/ButtonAdd";
 import Header from "../../components/navigation/Header";
 
@@ -17,6 +17,11 @@ const Resources = () => {
     /*Modal*/
     const [content, setContent] = useState();
     let [isOpen, setIsOpen] = useState(false)
+
+    useEffect(() => {
+        dispatch(get_users())
+    }, []);
+
     const openModal = () => {
         setIsOpen((prev) => !prev)
     }
@@ -45,22 +50,24 @@ const Resources = () => {
 
 
     return (<Layout>
-        <Modal isOpen={isOpen} close={openModal} children={content}/>
-        <ButtonAdd>
-            <button onClick={() => handleAddPersonnel()}
-                    className={"text-xs space-x-4 border-b-2  flex items-center p-2 justify-around font-light hover:bg-opacity-10 hover:rounded-lg hover:bg-[#5f9cf4]"}>
-                <FontAwesomeIcon className={"text-[#4687f1] bg-white rounded-full"}
-                                 size={"2x"} icon={faPlusSquare}/>
-                <p className={"text-[#4687f1] font-semibold"}>Añadir</p>
-            </button>
-        </ButtonAdd>
-        <div className={"h-full overflow-y-auto scrollbar-hide w-full bg-white p-4 rounded-l-2xl"}>
-            <Header/>
-            <Table data={users} update={handleUpdatePersonnel} remove={handleDeletePersonnel}/>
-        </div>
+            <Modal isOpen={isOpen} close={openModal} children={content}/>
+            <ButtonAdd>
+                <button onClick={() => handleAddPersonnel()}
+                        className={"text-xs space-x-4 border-b-2  flex items-center p-2 justify-around font-light hover:bg-opacity-10 hover:rounded-lg hover:bg-[#5f9cf4]"}>
+                    <FontAwesomeIcon className={"text-[#4687f1] bg-white rounded-full"}
+                                     size={"2x"} icon={faPlusSquare}/>
+                    <p className={"text-[#4687f1] font-semibold"}>Añadir</p>
+                </button>
+            </ButtonAdd>
+            <div className={"h-full overflow-y-auto scrollbar-hide w-full bg-white p-4 rounded-l-2xl"}>
+                <Header/>
+                <div className={"w-full overflow-scroll scrollbar-hide"}>
+                    <Table data={users} update={handleUpdatePersonnel} remove={handleDeletePersonnel}/>
+                </div>
+            </div>
 
 
-    </Layout>);
+        </Layout>);
 };
 
 export default Resources;

@@ -1,10 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {get_category} from "../../redux/actions/config";
 import {add_user, update_user} from "../../redux/actions/auth";
 import HeaderForm from "../util/HeaderForm";
+import {Switch} from "@headlessui/react";
 
 const FormPersonnel = ({data, close}) => {
     const dispatch = useDispatch();
@@ -23,10 +24,7 @@ const FormPersonnel = ({data, close}) => {
     const columns = [{name: 'first_name', title: 'Nombre', type: 'text', maxLength: 20}, {
         name: 'last_name', title: 'Apellidos', type: 'text', maxLength: 20
     }, {name: 'email', title: 'Email', type: 'email'}, {name: 'phone', title: 'Teléfono', type: 'telf'}, {
-        name: 'dni',
-        title: 'DNI',
-        type: 'text',
-        maxLength: 8
+        name: 'dni', title: 'DNI', type: 'text', maxLength: 8
     },]
 
 
@@ -92,6 +90,22 @@ const FormPersonnel = ({data, close}) => {
                     {formik.touched.role && formik.errors.role && (
                         <p className="text-red-400 text-[10px] mt-1 font-extralight leading-none">{formik.errors.role}</p>)}
                 </div>
+                <div>
+                    <p className={`text-[10px]  font-extralight leading-none text-blue-400 `}>Estado</p>
+                    <Switch checked={formik.values.is_active} onChange={text => formik.setFieldValue('is_active', text)}
+                            as={Fragment}>
+                        {({checked}) => (/* Use the `checked` state to conditionally style the button. */
+                            <button
+                                className={`${checked ? 'bg-blue-600' : 'bg-gray-200'} mt-2 relative inline-flex h-6 w-11 items-center rounded-full`}
+                            >
+                                <span className="sr-only">Estado</span>
+                                <span
+                                    className={`${checked ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                                />
+                            </button>)}
+                    </Switch>
+                    <p className={` text-[10px] mt-1  font-extralight leading-none ${formik.errors.is_active ? "text-red-400" : " text-gray-800"}`}>{formik.errors.is_active}</p>
+                </div>
             </div>
         </form>);
 };
@@ -106,6 +120,7 @@ const initialValues = (data) => {
         role: data?.role || 'O',
         category: data?.category || '',
         password: '',
+        is_active: data?.is_active || ''
     }
 }
 const validationSchema = (data) => {
@@ -118,6 +133,7 @@ const validationSchema = (data) => {
         role: Yup.string().required("Rol no puede estar en blanco"),
         category: Yup.number().required("Categoría no puede estar en blanco"),
         password: data ? Yup.string().min(8) : Yup.string().min(8).required(true),
+        is_active: Yup.boolean().required(true)
 
     }
 }

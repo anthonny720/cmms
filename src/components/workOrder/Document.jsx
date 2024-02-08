@@ -402,7 +402,7 @@ const DocumentViewer = ({data, close}) => {
                             display: "block"
 
                         }}>
-                            {data?.observations}
+                            {data?.stop ? " Afectó la producción": "No afectó la producción"}
                         </Text>
                     </View>
                     <View style={styles.section}> <Text style={{
@@ -449,7 +449,7 @@ const DocumentViewer = ({data, close}) => {
                             }}>PLANNER - {data?.planner_name}</Text>
                         </View>}
 
-                        {data?.signature_supervisor && <View style={{
+                        {data?.cleaned && <View style={{
                             width: "20%", display: "flex", flexDirection: "column"
                         }}>
                             <Image style={{
@@ -466,6 +466,24 @@ const DocumentViewer = ({data, close}) => {
                                 borderTopWidth: "1px",
                                 textTransform: "uppercase"
                             }}>SUP. CALIDAD - {data?.supervisor_name}</Text>
+                        </View>}
+                        {data?.validated && <View style={{
+                            width: "20%", display: "flex", flexDirection: "column"
+                        }}>
+                            <Image style={{
+                                width: "100%",
+                            }} alt={"supervisor"}
+                                   src={`${process.env.REACT_APP_API_URL}${data?.signature_requester}`}></Image>
+
+                            <Text style={{
+                                fontSize: "7px",
+                                fontWeight: "extrabold",
+                                fontFamily: "Times-Roman",
+                                textAlign: "center",
+                                width: "100%",
+                                borderTopWidth: "1px",
+                                textTransform: "uppercase"
+                            }}>SOLICITANTE - {data?.requester_name}</Text>
                         </View>}
                     </View>
                     <View style={styles.section}> <Text style={{

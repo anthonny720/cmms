@@ -91,7 +91,7 @@ const WorkOrder = () => {
         </Layout>);
 };
 const TaskSections = ({work, handleModalAction, handleDeleteWork}) => (<div
-        className="grid grid-cols-1 lg:grid-cols-2 lg:space-x-12 lg:p-6 w-full ">
+        className="grid grid-cols-1 md:grid-cols-2 lg:space-x-12 lg:p-6 w-full gap-2 ">
         <TaskSection title="Tareas pendientes" icon={faHourglass} color="red"
                      work={work.filter(item => !item.status)} handleModalAction={handleModalAction}
                      handleDeleteWork={handleDeleteWork}/>

@@ -1,20 +1,22 @@
 # Create your views here.
-from apps.users.models import UserCategory, ThirdParties
-from apps.users.serializers import ThirdPartiesSerializer
-from apps.util.permissions import IsAdmin, PlannerEditorPermission, BossEditorPermission
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from rest_framework import status
+from djoser.views import UserViewSet
+from rest_framework import status, permissions
 from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from djoser.views import UserViewSet
+
+from apps.users.models import UserCategory, ThirdParties
+from apps.users.serializers import ThirdPartiesSerializer
+from apps.util.permissions import IsAdmin, PlannerEditorPermission, BossEditorPermission
+
 User = get_user_model()
+
 
 
 class CustomUserViewSet(UserViewSet):
     permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
-
 
 
 @permission_classes([IsAdmin])
@@ -24,7 +26,7 @@ class DeleteUserView(APIView):
         if user == request.user:
             return Response({'error': 'Cannot delete self'}, status=status.HTTP_400_BAD_REQUEST)
         user.delete()
-        return Response({'message': f'User {user.get_full_name()} deleted'}, status=status.HTTP_204_NO_CONTENT)
+        return Response({'message': f'User {user.get_full_name()} deleted'}, status=status.HTTP_200_OK)
 
 
 @permission_classes([PlannerEditorPermission | IsAdmin | BossEditorPermission])
@@ -33,7 +35,7 @@ class UpdateUserView(APIView):
         user = get_object_or_404(User, pk=pk)
         category = get_object_or_404(UserCategory, pk=request.data.get('category'))
 
-        for field in ['first_name', 'last_name', 'address', 'phone', 'dni', 'role']:
+        for field in ['first_name', 'last_name', 'phone', 'dni', 'role','is_active']:
             if field in request.data:
                 setattr(user, field, request.data[field])
         user.category = category
@@ -75,5 +77,3 @@ class DeleteThirdPartiesView(APIView):
         third_party = get_object_or_404(ThirdParties, pk=pk)
         third_party.delete()
         return Response({'message': 'Third parties deleted'}, status=status.HTTP_200_OK)
-
-

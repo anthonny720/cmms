@@ -1,6 +1,7 @@
+from datetime import datetime
+
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from django.utils.dateparse import parse_date
 from rest_framework import status
 from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
@@ -9,7 +10,8 @@ from rest_framework.views import APIView
 from apps.management.models import WorkOrder, ResourceItem, HelperItem
 from apps.management.serializers import WorkOrderSerializer
 from apps.store.models import Article
-from apps.util.permissions import PlannerEditorPermission, TechnicalEditorPermission, SupervisorEditorPermission, BossEditorPermission, RequesterEditorPermission
+from apps.util.permissions import PlannerEditorPermission, TechnicalEditorPermission, SupervisorEditorPermission, \
+    BossEditorPermission, RequesterEditorPermission
 
 User = get_user_model()
 
@@ -28,8 +30,10 @@ class WorkOrderListView(APIView):
             type_maintenance_id = request.query_params.get('type')
             physical_id = request.query_params.get('physical')
 
-            if planned in ['true', 'false']:
-                queryset = queryset.filter(planned=(planned == 'true'))
+            if planned == 'true':
+                queryset = queryset.filter(planned=True)
+            else:
+                queryset = queryset.filter(planned=False)
             if physical_id:
                 queryset = queryset.filter(asset_id=physical_id)
             if type_maintenance_id:
@@ -48,7 +52,8 @@ class WorkOrderListView(APIView):
             serializer = WorkOrderSerializer(queryset, many=True)
             return Response({'data': serializer.data}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': 'Not work orders found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': 'Not work orders found', 'detail': str(e)},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @permission_classes([PlannerEditorPermission | TechnicalEditorPermission | BossEditorPermission])
@@ -90,8 +95,9 @@ class UpdateWorkOrderView(APIView):
         except WorkOrder.DoesNotExist:
             return Response({'error': 'Work order not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
-            return Response({'error':  "Work order not updated: " + ', '.join(serializer.errors)},
+            return Response({'error': "Work order not updated: " + ', '.join(serializer.errors)},
                             status=status.HTTP_400_BAD_REQUEST)
+
 
 @permission_classes([SupervisorEditorPermission])
 class UpdateWorkSupervisorView(APIView):
@@ -103,7 +109,9 @@ class UpdateWorkSupervisorView(APIView):
         work_order.cleaned = True
         work_order.supervisor = request.user
         work_order.save()
-        return Response({'message': 'Work order updated successfully'}, status=status.HTTP_200_OK)@permission_classes([SupervisorEditorPermission])
+        return Response({'message': 'Work order updated successfully'}, status=status.HTTP_200_OK) @ permission_classes(
+            [SupervisorEditorPermission])
+
 
 @permission_classes([RequesterEditorPermission])
 class UpdateWorkRequesterView(APIView):
@@ -116,8 +124,6 @@ class UpdateWorkRequesterView(APIView):
         work_order.requester = request.user
         work_order.save()
         return Response({'message': 'Work order updated successfully'}, status=status.HTTP_200_OK)
-
-
 
 
 @permission_classes([PlannerEditorPermission | TechnicalEditorPermission | BossEditorPermission])

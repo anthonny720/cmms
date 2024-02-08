@@ -23,14 +23,13 @@ const TableRegister = ({data, view, update, params}) => {
 
     const validated = (id) => {
         if (role !== 'R') {
-            dispatch(setAlert('No tienes permisos para validar la orden', 'error'))
+            dispatch(setAlert('No tienes permisos para validar la solicitud', 'error'))
         } else {
             dispatch(update_work_requester(id, params))
         }
     }
 
     const cleaned = (id) => {
-        console.log(role)
         if (role !== 'S') {
             dispatch(setAlert('No tienes permisos para validar la limpieza', 'error'))
         } else {
