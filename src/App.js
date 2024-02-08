@@ -20,6 +20,7 @@ import FormEquipments from "./components/Assets/FormEquipments";
 import ChangePassword from "./components/auth/Password";
 import Requirements from "./containers/pages/Requirements";
 import RegisterOrder from "./containers/pages/RegisterOrder";
+import Home from "./containers/pages/Home";
 
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
                     {/*Error Display*/}
                     <Route path="*" element={<Error404/>}/>
 
+                    <Route exact path="/" element={<Home/>}/>
                     <Route exact path="/personnel" element={<Resources/>}/>
                     <Route exact path="/thirdparties" element={<ThirdParties/>}/>
 
@@ -47,7 +49,6 @@ const App = () => {
 
                     <Route exact path="/tasks" element={<WorkOrder/>}/>
                     <Route exact path="/register" element={<RegisterOrder/>}/>
-
 
 
                     {/*Authentication*/}
